@@ -3,7 +3,8 @@
 A lightweight Flask-based local file server — host **any folder or single file** on your machine and share/download over your local network. No cloud, no drama.
 
 ---
-
+<img src="
+templates/assets/localshare.png" alt="localshare">
 ## ✨ Features
 
 - 📁 Browse files from any directory
