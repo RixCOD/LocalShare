@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>File Host</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+
+    <div class="container mx-auto p-8 max-w-4xl">
+        <h1 class="text-3xl font-bold text-center text-blue-600 mb-2">
+            📂 Local File Server
+        </h1>
+        <p class="text-center text-gray-500 mb-6 text-sm">Running on http://localhost:5000 &mdash; Share your files seamlessly</p>
+
+        <!-- Upload Section (only shown in directory mode) -->
+        {% if not single_file %}
+        <div class="bg-white shadow-lg rounded-xl p-5 mb-6 border-2 border-dashed border-blue-300">
+            <h2 class="text-lg font-semibold text-gray-700 mb-3">⬆️ Upload a File</h2>
+            <form action="/upload" method="POST" enctype="multipart/form-data" class="flex flex-col sm:flex-row gap-3 items-center">
+                <input 
+                    type="file" 
+                    name="file" 
+                    required
+                    class="block w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer"
+                />
+                <button 
+                    type="submit"
+                    class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition font-semibold whitespace-nowrap"
+                >
+                    Upload
+                </button>
+            </form>
+        </div>
+        {% endif %}
+
+        <!-- File List -->
+        <div class="bg-white shadow-lg rounded-xl p-6">
+            <h2 class="text-lg font-semibold text-gray-700 mb-4">📋 Files</h2>
+            {% if files %}
+            <table class="w-full table-auto">
+                <thead>
+                    <tr class="bg-gray-100 text-left text-sm text-gray-600">
+                        <th class="p-3 rounded-l">File Name</th>
+                        <th class="p-3">Type</th>
+                        <th class="p-3">Size</th>
+                        <th class="p-3 rounded-r">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for file in files %}
+                    <tr class="border-b hover:bg-gray-50 transition">
+                        <td class="p-3 font-medium text-gray-800">{{ file.name }}</td>
+                        <td class="p-3 text-gray-500">
+                            {% if file.is_dir %}
+                                📁 Folder
+                            {% else %}
+                                📄 File
+                            {% endif %}
+                        </td>
+                        <td class="p-3 text-gray-500 text-sm">
+                            {% if file.size != "-" %}
+                                {% set size = file.size %}
+                                {% if size >= 1073741824 %}
+                                    {{ "%.2f"|format(size / 1073741824) }} GB
+                                {% elif size >= 1048576 %}
+                                    {{ "%.2f"|format(size / 1048576) }} MB
+                                {% elif size >= 1024 %}
+                                    {{ "%.1f"|format(size / 1024) }} KB
+                                {% else %}
+                                    {{ size }} B
+                                {% endif %}
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+                        <td class="p-3">
+                            {% if not file.is_dir %}
+                            <a href="/download/{{ file.name }}" 
+                               class="inline-flex items-center gap-1 bg-blue-500 text-white px-4 py-1.5 rounded-lg hover:bg-blue-600 transition text-sm font-medium">
+                               ⬇️ Download
+                            </a>
+                            {% else %}
+                            <a href="/download-folder/{{ file.name }}"
+                               class="inline-flex items-center gap-1 bg-purple-500 text-white px-4 py-1.5 rounded-lg hover:bg-purple-600 transition text-sm font-medium">
+                               📦 Download as ZIP
+                            </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p class="text-center text-gray-400 py-8">No files here yet. Upload one above!</p>
+            {% endif %}
+        </div>
+    </div>
+
+</body>
+</html>
