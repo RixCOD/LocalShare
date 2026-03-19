@@ -1,7 +1,6 @@
 # LocalShare
 Share your files in localhost
-# 📂 Local File Server
-
+# 📂 LocalShare
 A lightweight Flask-based local file server — host **any folder or single file** on your machine and share/download over your local network. No cloud, no drama.
 
 ---
@@ -21,7 +20,7 @@ A lightweight Flask-based local file server — host **any folder or single file
 ## 📁 Project Structure
 
 ```
-local-file-server/
+LocalShare/
 ├── server.py
 ├── requirements.txt
 └── templates/
@@ -35,8 +34,8 @@ local-file-server/
 ### 1. Clone the repo
 
 ```bash
-git clone https://github.com/yourusername/local-file-server.git
-cd local-file-server
+git clone https://github.com/RixCOD/LocalShare.git
+cd LocalShare
 ```
 
 ### 2. Install dependencies
