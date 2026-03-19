@@ -1,6 +1,5 @@
-# LocalShare
-Share your files in localhost
-# 📂 LocalShare
+
+#                                                             📂 LocalShare
 A lightweight Flask-based local file server — host **any folder or single file** on your machine and share/download over your local network. No cloud, no drama.
 
 ---
